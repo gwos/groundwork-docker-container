@@ -1,9 +1,24 @@
 # GroundWork Monitor 7.0.2 Enterprise Release Notes
 
-This document contains important information about the GroundWork Monitor Enterprise 7.0.2 Release. Please read the relevant sections of this document before proceeding with installation or upgrades.
+## System Requirements
+GroundWork Monitor 7.0.2 Docker image can be installed on Docker Hub 1.3 or newer.
+System Requirements:
+- 4GB or more available memory
+- 20GB of available disk space. Can be an NFS mount or local directory
 
-**How to Install or Upgrade**  
-The install instructions for this release can be found [here](/display/SUPPORT/Installing+or+Upgrading+to+GroundWork+Monitor+7.0.2 "Installing or Upgrading to GroundWork Monitor 7.0.2") in the Knowledge Base. Click on the following link to get the [PDF version of the Install instructions](https://kb.groundworkopensource.com/spaces/flyingpdf/pdfpageexport.action?pageId=8029334). |
+## Install instructions
+- Get Dockerfile from https://github.com/gwos/groundwork-docker-container/Dockerfile and place it on the local system
+- Run command:
+    sudo docker build -t groundwork_docker .
+- After the image was created run the container with the following command:
+    docker run -it --name gwos-702 -h HOST-NAME -v LOCAL-STORAGE:/home/groundwork/data -v /etc/localtime:/etc/localtime:ro -p 80:80 groundwork_docker
+
+## Notes:
+- HOST-NAME needs to be resolvable because authentication uses intercept/redirect
+- LOCAL-STORAGE is the directory were the persistent data is stored between runs
+- The container runs on port 80. Make sure that you don't have another Apache on the same host
+- Once the container is created it can be started and stopped with the commands:
+    sudo docker start gwos-702 or sudo docker stop gwos-702
 
 This release of GroundWork Monitor adds several new features to enhance the monitoring experience with extensions to monitor virtual environments, simplify notifications and escalations, and generally enhance usability.
 
@@ -39,22 +54,19 @@ This release of GroundWork Monitor adds several new features to enhance the moni
     - Using PostgreSQL as the embedded database
     - Support of a remote (separate) database server
     - Operating system support
-
-- SECTION 2 - FIXED ISSUES SINCE RELEASE 7.0.1
-- SECTION 3 - KNOWN ISSUES AND LIMITATIONS
-  - Upgrade Issues
+- KNOWN ISSUES AND LIMITATIONS
   - Limitations and Work-Arounds
   - Compatibility Issues
-- SECTION 4 - ANNOUNCEMENTS AS OF VERSION 7.0.2
+- ANNOUNCEMENTS AS OF VERSION 7.0.2
   - Supported Versions of GroundWork
   - Linux Supported Versions
   - Supported Architectures
   - Browser Compatibility
-- SECTION 5 - ADDITIONAL INFORMATION
+- ADDITIONAL INFORMATION
 
 # Summary of new features in GroundWork Monitor 7.0.2
 
-GroundWork Monitor 7.0.2 is a maintenance release that includes a large number of bugfixes and several significant usability and performance improvements. It is recommended to upgrade to GWME 7.0.2 release to take advantage of these improvements that are described in more details in the following section.&nbsp;
+GroundWork Monitor 7.0.2 is a maintenance release that includes a large number of bugfixes and several significant usability and performance improvements. It is recommended to upgrade to GWME 7.0.2 release to take advantage of these improvements that are described in more details in the following section.
 
 ## Event Console
 
@@ -67,13 +79,13 @@ The current release improves the Event Management workflow and make sure that al
 - "Nagios Acknowledge" action applies to Nagios only. "Acknowledge Log Message" action applies to all non-nagios application types.
 - All Non-Nagios messages, can be grouped and acknowledged at same time. If Nagios messages are mixed with other messages, then only
 - Accept, Open, Close, Notify action be performed. So the new color coded buttons appear/disappear accordingly based on the selected messages.
-- Event Console Column Device will be replaced with Host.&nbsp;
+- Event Console Column Device will be replaced with Host.
 - Enable links to SV Host or Host/Service for all application types
-- Clicking on Event Tile portlets take to Event console with the Hostgroup or servicegrup filter applied.&nbsp;
+- Clicking on Event Tile portlets take to Event console with the Hostgroup or servicegrup filter applied.
 - In Event Console, Show Event Tile shows the event tile portlet dialog which can be dragged within the Event console screen
 - The Event Tile portlet is now integrated in the Dashboard and in the Event Console. Selecting any Pie chart will link to Event Console and open a filtered view.
 
-#Quick overview of the new elements:  
+#Quick overview of the new elements:
 
 ## REST API
 
@@ -91,17 +103,17 @@ More details on how to integrate the REST Clients can be found in the developer 
 
 ## Performance improvements
 
-The legacy Nagios feeders (status & event) and the newly introduced Cacti feeder have been re-factored to use the REST API to submit data into the GroundWork system. Using the more the more scale-able REST API and replacing the legacy XML feeders resulted in a more robust and better performing data feed into the GroundWork system. The system planning guide has been revised to reflect the improvements. &nbsp;
+The legacy Nagios feeders (status & event) and the newly introduced Cacti feeder have been re-factored to use the REST API to submit data into the GroundWork system. Using the more the more scale-able REST API and replacing the legacy XML feeders resulted in a more robust and better performing data feed into the GroundWork system. The system planning guide has been revised to reflect the improvements.
 
 ## Cloud Hub 1.3
 
-- The latest version of Cloud Hub includes support for monitoring Open Stack environments. Cloud Hub can now simultaneously monitor VMware, RHEV and Open Stack virtualization environments through the same instance and setup. &nbsp; [More information ...](https://kb.groundworkopensource.com/display/DOC70/GroundWork+Cloud+Hub)
+- The latest version of Cloud Hub includes support for monitoring Open Stack environments. Cloud Hub can now simultaneously monitor VMware, RHEV and Open Stack virtualization environments through the same instance and setup.  [More information ...](https://kb.groundworkopensource.com/display/DOC70/GroundWork+Cloud+Hub)
 
 ## Security and Authentication
 
 The current version of GroundWork Monitor went through a security and penetration assessment by Verizon Security services and received a rating that was above the Technology industry average. Details of the reports can be made available to existing customers upon request.
 
-## Cacti&nbsp;
+## Cacti
 
 GroundWork Monitor 7.0.2 includes a Cacti feeder which is enabled by default. With this feeder and devices monitored by Cacti and having a threshold defined will automatically added to the GroundWork Foundation and therefore immediately visible in Status Viewer and event console. The step of importing cacti hosts to Monarch is no longer necessary and this step has been automated.
 
@@ -117,7 +129,7 @@ All GroundWork applications were integrated into the portal, taking advantage of
 
 ## GroundWork Cloud Hub 1.2
 
-This release provides enhanced monitoring for VMware vSphere, VMware ESXi, and Red Hat Enterprise Virtualization. Hypervisors and Hypervisor Management data will be seamlessly integrated into the GroundWork UI. &nbsp;In addition Cloud Hub configuration now allows selection of additional views such as Storage or Network Domains and Resource Pools. The views are visible in Event Console and Status Viewer&nbsp; [More information ...](https://kb.groundworkopensource.com/display/DOC70/GroundWork+Cloud+Hub)
+This release provides enhanced monitoring for VMware vSphere, VMware ESXi, and Red Hat Enterprise Virtualization. Hypervisors and Hypervisor Management data will be seamlessly integrated into the GroundWork UI. In addition Cloud Hub configuration now allows selection of additional views such as Storage or Network Domains and Resource Pools. The views are visible in Event Console and Status Viewer [More information ...](https://kb.groundworkopensource.com/display/DOC70/GroundWork+Cloud+Hub)
 
 ## Archive Database
 
@@ -125,7 +137,7 @@ A new log-message archiving facility is supported. This allows long-term operati
 
 An Archive Server is intended to take over the duty of storing long-term performance and event data. On a regular basis, typically shortly after midnight each day, recent data will be extracted from a GroundWork Monitor runtime database, transferred to a separate machine if necessary, and injected into a separate archive database.
 
-For more information, see the Archive Database\subsection below.
+For more information, see the Archive Database subsection below.
 
 ## Configuration UI and workflow changes
 
@@ -133,7 +145,7 @@ The visual appearance of the Configuration and Auto-Discovery applications has b
 
 Management of the Nagios Main Configuration options has been overhauled. They are now logically categorized and ordered within those categories; the categories themselves are grouped into a fairly natural progression of concerns; and the navigational links to reach the options are extended to show the category names, making it much easier to find what you're looking for.
 
-For more information, see the Configuration (Monarch)\ subsection below.
+For more information, see the Configuration (Monarch) subsection below.
 
 ## Business Service Monitoring (BSM)
 
@@ -147,8 +159,8 @@ With the release of GroundWork Monitor 7.0.0, many components have been upgraded
 - Java 1.7.0\_25
 - Postgres 9.1.9
 - RRDtool 1.4.8
-- <font color="#222222">Apache to 2.2.23</font>
-- <font color="#222222">modsecurity to 2.7.2</font>
+- Apache to 2.2.23
+- modsecurity to 2.7.2
 
 ## CHANGES IN GWME 7.0.X
 
@@ -295,150 +307,31 @@ Using a remote database offloads a lot of disk activity away from the GroundWork
 
 Starting with release 6.6.1, GroundWork Monitor Enterprise is available for 64-bit Linux. Support for 32-bit Linux has been dropped, as previously announced.
 
-# SECTION 2 - FIXED ISSUES SINCE RELEASE 7.0.1
-
-This section summarizes the minor issues fixed since release 7.0.0. GDMA issues are not included in this list.
-
-| Key | Summary | Component/s |
-| --- | --- | --- |
-| GWMON-11241 | Horizontal scrollbar missing in 7.0 Statusviewer | Status Viewer |
-| GWMON-11551 | Event Console Details pop-up doesn't show color for Unscheduled Critical | Console |
-| GWMON-11530 | Cannot Acknowledge non-open messages from event console | Foundation |
-| GWMON-11539 | Autodiscovery only applies icmp\_ping\_alive to discovered hosts even other services are available | Auto Discovery |
-| GWMON-10883 | "Delete" button is not present in the Service Profiles page for GroundWork Monitor 7.0 | Configuration |
-| GWMON-11490 | Event Console push doesn't work if another tab to the same server is open | Console |
-| GWMON-11520 | Event Portlet in SV should show all OPEN and Acknowledged events for Host/Services/HG/SG | Status Viewer |
-| GWMON-11334 | need core/services/notification-noma/log/main/ directory added | Configuration |
-| GWMON-11522 | Event Feeder enters into endless loop when sending Acknowledge messages stops sending other events | Nagios |
-| GWMON-11583 | Event Console: All Actions should prompt for a comment and date/user information should be stored in comment | Console |
-| GWMON-11491 | Dynamic properties are not showing in event console for SYSTEM application type | Console |
-| GWMON-10779 | Searches in status view are case sensitive. | Status Viewer |
-| GWMON-11313 | Recurring downtimes do not work | Configuration |
-| GWMON-11324 | Make 7.0.x groundwork screen size variable to fit larger displays | UI Layout/Theme |
-| GWMON-11414 | Host Information portlet doesnt show Nagios links for certain hosts even though host is of NAGIOS application type. | Status Viewer |
-| GWMON-11464 | Portal pages cannot be deleted or copied or re-arranged after creating it | JBoss Portal |
-| GWMON-11291 | /graphs/cgi-bin/ references are non-functional in GWMEE 7.0.X | Configuration |
-| GWMON-11611 | Adding services via monarch configuration for existing cloudhub hosts throws throws error though commit says success | Configuration |
-| GWMON-11613 | Event tile portlet should hide hostgroups that has zero events | Console |
-| GWMON-11314 | Recurring downtimes do not honor service wildcard pattern matching | Configuration |
-| GWMON-10821 | Custom Date-Time in Host view doesn't honor the 'End Date/Time' | Status Viewer |
-| GWMON-9821 | Custom Date-Time setting in Status portlet is not honored in all cases | Status Viewer |
-| GWMON-11634 | Status Viewer displays NextCheck time for Host and Services even in passive check mode | Status Viewer |
-| GWMON-11463 | Nagvis pop-up show errors if service status messages contains non-ascii characters | Foundation Nagvis |
-| GWMON-11461 | Calculated value in Host or Service status portlet is incorrect for passive checks | JBoss Portal |
-| GWMON-11067 | Service API incorrect lastStateChange | &nbsp; |
-| GWMON-11562 | Add a default PENDING event for localhost and its services in the seed data | Foundation |
-| GWMON-11457 | Status bar chart does not honor the state change | Console |
-| GWMON-11517 | GWME 7.0.2 Installer fails on a SLES 10 | Installer |
-| GWMON-11499 | Updated from 6.6.1 or 6.7 to 7.0.1 failed (Error: Not a PostgreSQL version 9.1.9 installation) | Upgrades |
-| GWMON-10851 | NagVis dont show Events from Maps that are linked two levels down | Web Services |
-| GWMON-11344 | Hyperlink from Status Viewer to Cacti Graphs are broken in 7.0.1 | Status Viewer |
-| GWMON-11590 | snmptt does not properly send ISO-8859-1 (Latin-1) as UTF-8 | Configuration |
-| GWMON-11540 | editing an auto-discovery automation schema crashes Monarch | Configuration |
-| GWMON-11027 | directory referred to by stylesheet does not exist | UI Layout/Theme |
-| GWMON-11105 | auto-discovery automation schema data source must be restricted | Auto Discovery |
-| GWMON-11663 | Host and Service availability in Status Viewer show gaps at the beginning | &nbsp; |
-| GWMON-11662 | Host and Service Availability graphs in SV show incomplete data | Foundation |
-| GWMON-11372 | nedi unavailable when using https | NMS - NeDi |
-| GWMON-11556 | HostGroup widget in Entire Network and widgets on Hostgroup page don't resfresh on updates | Status Viewer |
-| GWMON-11531 | Status Viewer keeps reverting to Entire Network view | Status Viewer |
-| GWMON-11349 | TB-7.0.1-Patch1 creates lots of noise framework.log when the user logs out. | JBoss Portal |
-| GWMON-11582 | Tooltip on EventPortlet Message field not enabled | JBoss Portal |
-| GWMON-11481 | 'Nagios' link on Host Information Portlet on Status viewer is absent | Status Viewer |
-| GWMON-11321 | core/services/notification-noma/log/main/ directory is missing in 7.0.X | Configuration |
-| GWMON-11403 | building multiple instances at once mishandles timeperiod exclusions | Configuration |
-| GWMON-11643 | Service names lengths more than 35 chars causes hostavailability to stack the graphs by grouping | Status Viewer |
-| GWMON-11639 | REST API host delete doesn't work | Foundation |
-| GWMON-11277 | gwdiags.pl does not usefully capture configuration.properties | Tools |
-| GWMON-11301 | cannot use higher debug levels in log archiving | Foundation |
-| GWMON-11365 | Event Tile portlet shows wrong event count when more than one application starts monitoring | Dashboards |
-| GWMON-11495 | PHP engine should be compiled using internal gd libaries | Installer |
-| GWMON-11502 | bsmChecker Cronjob generates on every run a E-Mail | &nbsp; |
-| GWMON-11526 | acknowledging events can result in Accept status rather than Acknowledge status | Console |
-| GWMON-10838 | A Service Escalation has some limit in terms of how many services can be assigned | Configuration |
-| GWMON-11670 | gdma\_auto.pl misplaces its seek file | Configuration |
-| GWMON-11450 | provide methods for creating application types and properties | &nbsp; |
-| GWMON-11317 | service escalation detail background is mis-drawn in the UI | Configuration |
-| GWMON-11535 | Birt reports layout is messed up since 7.0. Report tree & Report selector should be on left column and Report viewer should be on right column | &nbsp; |
-| GWMON-11596 | Event portlet width in statusviewer overflows to the grey border | Status Viewer |
-| GWMON-11493 | Acknowledgement comments dont show for VEMA,CHREV,ARCHIVE,SEL,BSM | Console |
-| GWMON-11504 | Upgrading from GroundWork 6.7 to 7.0.1sequences in the slareport database are created with the wrong permissions | &nbsp; |
-| GWMON-11503 | Recurring Downtime \* with wildcard is not allowed - despite appropriate help text | &nbsp; |
-| GWMON-11642 | you can create host 'a+b' i.e. with a plus sign in the name, but cannot delete it | Foundation |
-| GWMON-11584 | Reduce noise in framework.log for both single jboss and dual jboss configurations | JBoss Portal |
-| GWMON-11393 | Remove Dependency on ws\_client.properties from Rest Client API | Foundation |
-| GWMON-11395 | Improve Event API to support updating of all Event Properties | Foundation |
-| GWMON-11420 | Service description need to be a standard builtin column in Event console | Console |
-| GWMON-11422 | Acknowledge action allowed for all Application types | Console |
-| GWMON-11426 | Default Event Console View needs to include Ack, Comment, Service name and TicketID | Console |
-| GWMON-11308 | Make Comments in status view sortable by date. | Status Viewer |
-| GWMON-11487 | support CUSTOM monitor status values in Foundation | Foundation |
-| GWMON-11599 | No-Nagios events acknowledged in Event Console/Event portlet need to set isAcknowledged flag so that Seurat and SV show that Operational status correctly | &nbsp; |
-| GWMON-11429 | Nagios Status and Event Feeder need to send messages through RAPID perl library to the REST API | &nbsp; |
-| GWMON-10742 | gwdiags collecting dual\_jvm data | Tools |
-| GWMON-11518 | Remove isAcknowledged column from Event Console and dynamic properties for LogMessages | Console |
-| GWMON-11541 | Event Console Host detail should color status field | Console |
-| GWMON-11566 | Add AUDIT ApplicationType to classify events of configuration changes | Installer |
-| GWMON-11532 | Monarch should send PENDING-status events for new objects | Configuration |
-| GWMON-11459 | provide version-retrieval method and/or feature-presence methods | Foundation |
-| GWMON-11594 | Out of the box GWME 7.0.2 includes a core license | Installer |
-| GWMON-11570 | NoMa increase watchdogMaxVSS to 2500000 in stock 7.0.2 | Noma |
-| GWMON-11626 | default for Cacti Feeder should be enabled | NMS - Cacti |
-| GWMON-10219 | gw-backup utility will not follow a symlink for /usr/local/groundwork directory | BitRock Tools |
-| GWMON-11489 | Ensure all Rest APIs use AOP for Write and Delete Operations | Foundation |
-| GWMON-11392 | Port Notification NOMA Legacy to Standard Rest API | Foundation |
-| GWMON-11391 | Port Performance Data Legacy to a Standard Rest API | Foundation |
-| GWMON-11394 | Token Based Security | Foundation |
-
-# SECTION 3 - KNOWN ISSUES AND LIMITATIONS
-
-## Upgrade Issues
-
-- Upgrades from MySQL-based releases to PostgreSQL-based releases do not properly modify the content of two GDMA plugin-related tables in the database, and shuffle around a few files in a manner coordinated with the content of those tables. This problem does not affect you if the last MySQL-based release you had installed or upgraded to was GWMEE 6.5, where the tables and files were properly handled either in a fresh install or an upgrade to that release.  
-  
-  
-GroundWork is providing a script in a Technical Bulletin to repair the tables and file locations. See [TB 7.0.1-1](/display/SUPPORT/7.0.1+Plugin+Tables+May+Need+Repair+After+Migration+from+MySQL+to+PostgreSQL "7.0.1 Plugin Tables May Need Repair After Migration from MySQL to PostgreSQL") for the script and instructions on running it.
-- If the BSM configuration includes references to Service Groups the references need to be removed before the Service Group is removed from Monarch. If Service Groups are deleted from monitoring but BSM has references to it the BSM screen will give an application error. The workaround is the following:
-  - Add &nbsp;the Service Group back to Configuration and assign at least one service to it.
-  - Perform a commit
-  - Go into BSM management and remove the Service Group references
-  - Return to Configuration and remove the ServiceGroup and do a commit.&nbsp;
+# KNOWN ISSUES AND LIMITATIONS
 
 ## Limitations and Work-Arounds
 
 - SUSE 9 installations of GroundWork Monitor may exhibit an issue where certain services such as crond, postfix, ntp, and others will not start properly after GroundWork Monitor is installed. This is due to a dependency on the syslog service, which GroundWork replaces with syslog-ng at installation time. Later versions of SUSE Linux do not exhibit this issue. To work around this in SUSE 9, simply edit the init scripts for these services, removing the dependency on syslog. For example, in <tt>/etc/init.d/cron</tt>, change:
-
     # Required-Start: $remote_fs $syslog $time
-
 to:
-
     # Required-Start: $remote_fs $time
-
 - Running on Ubuntu releases before 12.04 is not recommended, because starting and stopping <tt>ntop</tt> on earlier releases is broken.
 - Safari and other webkit-based browsers such as Google Chrome may experience an issue whereby the URL will "cycle" in the address bar after login, and never display a portal page. This can sometimes be observed if the user logs in, then closes the browser window, and reconnects later. If this occurs, stop the browser, and retype the url in the form:
-
     http(s)://servername/portal
-
 Usually it is only necessary to do this once per session.
-
 - The GroundWork backup utility,<tt>/usr/local/groundwork/gw-backup-br204-linux-32</tt> or<tt>/usr/local/groundwork/gw-backup-br204-linux-64</tt>, is included in the 6.6.1 release of GroundWork Monitor. It will be installed on the disk when you start the binary installer, and can be used to make a backup of an existing GroundWork 6.x installation. This utility does not support GroundWork Monitor 5.3, however, and the installer does not differentiate between versions when prompting you to make a backup. If you need to make a backup of your 5.3 installation, please refer to the backup section for older versions in this document. If you attempt to use the backup utility, the backup will hang, and must be killed. It will not harm the GroundWork installation, but neither will it back it up as intended.
-
-**Tread carefully with the backup utility**  
-There are issues with the backup utility supplied with the 6.6.1 release and earlier releases. See the separate [How to use the GroundWork Monitor Backup and Restore Utility](https://kb.groundworkopensource.com/display/SUPPORT/How+to+use+the+GroundWork+Monitor+Backup+and+Restore+Utility) document before attempting to use this utility. GroundWork will be supplying a replacement utility to address the issues seen in testing. Check back on that page for the updated version. |
 
 - In Auto-Discovery, the OS-match capability of NMAP scan methods is not consistent. It appears there is some significant variation in results based on network traffic conditions, and the OS used to perform the scan. This issue can be worked around by using the port-to-service or service profile matching capability of auto-discovery.
 
 ## Compatibility Issues
 
-- An unfortunate regression in the performance data feeder found its way into the GWMEE 6.5 and 6.6 releases (GWMON-10272). In the course of extending the feeder to support more than 26 data sources for an RRD graph, to support a customer with an extreme configuration, we inadvertently broke backward compatibility with the way that the $CDEFLABEL#$ macro is substituted within $LISTSTART$ ... $LISTEND$ bracketing markers. (In the screen for Resources => USING APPLICATIONS > Configuration > Configuration Scenarios > Creating Performance Graphs, see the Custom RRDtool Graph Command section.) Instead of using simple letters for these labels, we used strings <tt>_v0_</tt>,<tt>_v1_</tt>, and so forth. This not only broke backward compatibility, it also created a rift between RRD graphing commands used in the Performance Viewer and those used in the Status Viewer. In the GWMEE 6.6.1 release, we are reverting back to the previous convention, to preserve backward compatibility for most customers upgrading to this release.  
-  
-  
-Most customers will not see a difference with the old convention back in place. Previously generated RRD commands will be automatically replaced with updated commands when service-check performance data is processed under the new release. The only customers who will need to make manual adjustments are those who adapted to the new convention when creating complex manually-edited graphing commands.  
-  
-  
+- An unfortunate regression in the performance data feeder found its way into the GWMEE 6.5 and 6.6 releases (GWMON-10272). In the course of extending the feeder to support more than 26 data sources for an RRD graph, to support a customer with an extreme configuration, we inadvertently broke backward compatibility with the way that the $CDEFLABEL#$ macro is substituted within $LISTSTART$ ... $LISTEND$ bracketing markers. (In the screen for Resources => USING APPLICATIONS > Configuration > Configuration Scenarios > Creating Performance Graphs, see the Custom RRDtool Graph Command section.) Instead of using simple letters for these labels, we used strings <tt>_v0_</tt>,<tt>_v1_</tt>, and so forth. This not only broke backward compatibility, it also created a rift between RRD graphing commands used in the Performance Viewer and those used in the Status Viewer. In the GWMEE 6.6.1 release, we are reverting back to the previous convention, to preserve backward compatibility for most customers upgrading to this release.
+
+Most customers will not see a difference with the old convention back in place. Previously generated RRD commands will be automatically replaced with updated commands when service-check performance data is processed under the new release. The only customers who will need to make manual adjustments are those who adapted to the new convention when creating complex manually-edited graphing commands.
+
 The old convention, of using single lowercase characters <tt>a</tt>through <tt>z</tt>, is now extended to support additional datasources in a different way. The sequence will now be<tt>a</tt>, <tt>b</tt>, ..., <tt>z</tt>, <tt>aa</tt>, <tt>ab</tt>, ..., <tt>az</tt>, <tt>ba</tt>, <tt>bb</tt>, and so forth. This will be formally documented in the 6.7 release.
 
-# SECTION 4 - ANNOUNCEMENTS AS OF VERSION 7.0.2
+# ANNOUNCEMENTS AS OF VERSION 7.0.2
 
 ## Supported Versions of GroundWork
 
@@ -451,7 +344,7 @@ Ground Monitor version 6.5 will be end-of-life with the next release. Customers 
 SuSE Enterprise Linux (SLES):
 
 - Customers using SUSE SLES 9.x are advised that support for this platform was discontinued with the previous release.
-- SLES 10 has reached end-of-life and is no longer supported for installing GWME 7.0.2.&nbsp;
+- SLES 10 has reached end-of-life and is no longer supported for installing GWME 7.0.2.
 - Recommended version: SLES 11 SP3
 
 Red Hat Enterprise Linux (RHEL):
@@ -463,7 +356,7 @@ Ubuntu LTS
 
 - Ubunto 8.04 LTS has reached end-of-life and are no longer supported for installing GroundWork 7.0.2 or newer.
 - Ubuntu 10.04 LTS has incompatibilities with the NTOP application and therefore we recommend use the recommended version of Ubuntu.
-- Recommended version: Ubuntu 12.04 LTS&nbsp;
+- Recommended version: Ubuntu 12.04 LTS
 
 ## Supported Architectures
 
@@ -473,55 +366,24 @@ As of the previous release, GroundWork supports only 64-bit versions of GroundWo
 
 This version of GroundWork has been tested with Firefox 3 & 6, Google Chrome v16, as well as Internet Explorer 7, 8, and 9.
 
-# SECTION 5 - ADDITIONAL INFORMATION
+# ADDITIONAL INFORMATION
 
-**ABOUT THE NETWORK SERVICE**
-
-This version of GroundWork Monitor includes the Network Service component. This component provides the following capabilities:
-
-- Provides GroundWork Monitor administrators with software update notifications in their home screen.
-- Provides environment statistics to GroundWork about the GroundWork Monitor installation.
-- Provides the license key hash to GroundWork for each GroundWork Monitor installation.
-
-The Network Service communicates with servers in the **checkforupdates.com** domain every 12 hours via HTTPS (on TCP port 443). All communication is initiated by the GroundWork Monitor Enterprise server.
-
-The complete set of information sent to GWOS is:
-
-- The type of GroundWork Monitor product installed (e.g. Community Edition or Enterprise Edition) and version.
-- The Operating System vendor and version and basic hardware information (RAM, CPU).
-- The size of the monitored environment: number of configured devices and hosts, host groups, service checks, users and service checks being used.
-- The license key hash (checksum).
-
-If you need to enable the Network Service on an existing GroundWork Monitor Enterprise installation execute the following binary as the root user:
-
-    /usr/local/groundwork/network-service/bin/network-service-manager.bin
-
-**Proxy Server Configuration**
+## Proxy Server Configuration
 
 The Network Service will not be able to receive updates if a non-transparent proxy is used. To configure the proxy settings, complete the following:
-
-1. Install the product and enable the Network Service during installation.
-2. Login using a secure shell on the GroundWork server.
-
+- Install the product and enable the Network Service during installation.
+- Login using a secure shell on the GroundWork server.
     cd /usr/local/groundwork/network-service/scripts/
     ./network-service-ctl.sh stop
     cd /usr/local/groundwork/network-service/bin/
-
-3. Edit the **agent.conf** file and add the following:
-
+- Edit the **agent.conf** file and add the following:
     proxy_host=xxx.yyy.zzz.www
     proxy_port=pppp
-
 Save your changes.
-
-4. Now restart the network service:
-
+- Now restart the network service:
     ./network-service-ctl.sh stop
     ./network-service-ctl.sh start
 
 * * *
 
 Copyright 2004-2014 GroundWork Open Source, Inc. ("GroundWork"). All rights reserved. Use is subject to GroundWork commercial license terms. GroundWork Monitor products are released under the terms of the various public and commercial licenses. For information on licensing and open source elements please see [http://www.gwos.com/products/pro-ipingredients.html](http://www.gwos.com/products/pro-ipingredients.html). GroundWork, GroundWork Open Source, GroundWork Monitor Professional, GroundWork Monitor Open Source, GroundWork Community Edition, GroundWork Monitor Enterprise, GroundWork Foundation, GroundWork Status Viewer, Monarch, and GroundWork Guava are trademarks of GroundWork Open Source, Inc. Other trademarks, logos and service marks (each, a "Mark") used in GroundWork products, including Nagios, which is a registered trademark of Ethan Galstad, are the property of other third parties. These Marks may not be used without the prior ritten consent of GroundWork Open Source or the third party that owns the respective Mark.
-
-  
-  
