@@ -9,60 +9,25 @@ System Requirements:
 ## Install instructions
 - Get Dockerfile from https://github.com/gwos/groundwork-docker-container/Dockerfile and place it on the local system
 - Run command:
-    sudo docker build -t groundwork_docker .
+```
+sudo docker build -t groundwork_docker .
+```
 - After the image was created run the container with the following command:
-    docker run -it --name gwos-702 -h HOST-NAME -v LOCAL-STORAGE:/home/groundwork/data -v /etc/localtime:/etc/localtime:ro -p 80:80 groundwork_docker
+```
+docker run -it --name gwos-702 -h HOST-NAME -v LOCAL-STORAGE:/home/groundwork/data -v /etc/localtime:/etc/localtime:ro -p 80:80 groundwork_docker
+```
 
 ## Notes:
 - HOST-NAME needs to be resolvable because authentication uses intercept/redirect
 - LOCAL-STORAGE is the directory were the persistent data is stored between runs
 - The container runs on port 80. Make sure that you don't have another Apache on the same host
 - Once the container is created it can be started and stopped with the commands:
-    sudo docker start gwos-702 or sudo docker stop gwos-702
+```
+sudo docker start gwos-702 or sudo docker stop gwos-702
+```
 
 This release of GroundWork Monitor adds several new features to enhance the monitoring experience with extensions to monitor virtual environments, simplify notifications and escalations, and generally enhance usability.
 
-- GroundWork Monitor 7.0.2 Enterprise Release Notes
-- Summary of new features in GroundWork Monitor 7.0.2
-  - Event Console
-  - REST API
-  - Performance improvements
-  - Cloud Hub 1.3
-  - Security and Authentication
-  - Cacti
-- Summary of new features in GroundWork Monitor 7.0.0/7.0.1
-  - GroundWork Cloud Hub 1.2
-  - Archive Database
-  - Configuration UI and workflow changes
-  - Business Service Monitoring (BSM)
-  - Component Upgrades
-  - CHANGES IN GWME 7.0.X
-    - Security and Authentication
-    - Configuration (Monarch)
-    - PostgreSQL
-    - Archive Database
-    - Nagios
-    - Cacti
-    - GroundWork Distributed Monitoring Agents (GDMA)
-    - Operating framework
-  - OTHER MAJOR CHANGES IN PRIOR RELEASES
-    - General
-    - Nagios
-    - Performance Data Handling
-    - Insight Reports
-    - GroundWork Distributed Monitoring Agents (GDMA)
-    - Using PostgreSQL as the embedded database
-    - Support of a remote (separate) database server
-    - Operating system support
-- KNOWN ISSUES AND LIMITATIONS
-  - Limitations and Work-Arounds
-  - Compatibility Issues
-- ANNOUNCEMENTS AS OF VERSION 7.0.2
-  - Supported Versions of GroundWork
-  - Linux Supported Versions
-  - Supported Architectures
-  - Browser Compatibility
-- ADDITIONAL INFORMATION
 
 # Summary of new features in GroundWork Monitor 7.0.2
 
@@ -119,7 +84,7 @@ GroundWork Monitor 7.0.2 includes a Cacti feeder which is enabled by default. Wi
 
 # Summary of new features in GroundWork Monitor 7.0.0/7.0.1
 
-**Red Hat JBoss Portal**
+## Red Hat JBoss Portal
 
 GroundWork Monitor 7.0.0 incorporates a completely new Enterprise Portal Platform that is highly scalable with powerful performance. Jboss Portal Platform 6 is based on the latest JBoss Application server that was re-designed to be highly modular and cloud-ready. Portal management actions such as creating and maintaining users, roles, pages, and layouts are part of the JBoss enterprise framework that significantly improves usability.
 
@@ -182,15 +147,15 @@ With the release of GroundWork Monitor 7.0.0, many components have been upgraded
 - Deployment of configurations to child servers has been protected against some potential temporarily-damaging concurrent actions.
 - The help messages for Notes, Notes URL, and Action URL fields in host extended info templates and service extended info templates have been revamped to clearly describe the macro substitutions that are performed when these entries are applied to particular hosts and host services.
 - (7.0.1) Support for externals is now enabled by default in the fresh-install Monarch seed data, and forced on during an upgrade from a previous release. This is to better support GroundWork Distributed Monitoring Agents (GDMA) deployments in out-of-the-box deployments.
-- (7.0.1) GDMA auto-registration is now supported in an out-of-the-box fresh install of GWMEE, by the addition of a hostgroup ("Auto-Registration") and a Monarch Configuration Group ("auto-registration") corresponding to the values in the<tt>config/register_agent.properties configuration</tt> file. Similarly, if auto-registration is enabled in that file during an upgrade from a previous release, the locally configured names for those objects will be added to Monarch if they do not already exist.
-- (7.0.1) Similarly, host profiles to support auto-registration from the standard GDMA-supported platforms are now part of the Monarch seed data in a fresh install, and will be added to Monarch during an upgrade if auto-registration is enabled in the<tt>config/register_agent.properties configuration</tt> file.
+- (7.0.1) GDMA auto-registration is now supported in an out-of-the-box fresh install of GWMEE, by the addition of a hostgroup ("Auto-Registration") and a Monarch Configuration Group ("auto-registration") corresponding to the values in the <tt>config/register_agent.properties configuration</tt> file. Similarly, if auto-registration is enabled in that file during an upgrade from a previous release, the locally configured names for those objects will be added to Monarch if they do not already exist.
+- (7.0.1) Similarly, host profiles to support auto-registration from the standard GDMA-supported platforms are now part of the Monarch seed data in a fresh install, and will be added to Monarch during an upgrade if auto-registration is enabled in the <tt>config/register_agent.properties configuration</tt> file.
 - (7.0.1) A bunch of new performance-configuration entries are now present in the fresh-install Monarch seed data, and added during an upgrade, to support standard GDMA-monitored services on the various supported GDMA platforms.
 - (7.0.1) The mechanism used to graph CloudHub-sensed metrics has been modified to better favor known data over unknown data, so any gaps in monitoring are much less likely to display gaps in the drawn graphs. This change only affects newly created RRD files; it will not reach back and modify already-created RRD files.
 - (7.0.1) New sets of profiles are now available to cover monitoring of certain Citrix products, Network security appliances from various vendors, and Hitachi storage platforms. See the Citrix, Network-Security-Appliances, and Storage profile categories, respectively.
 
 ### PostgreSQL
 
-- (7.0.1) The location of the PostgreSQL log file has been changed from<tt>/usr/local/groundwork/postgresql/data/postmaster.log</tt> to<tt>/usr/local/groundwork/postgresql/data/pg_log/postmaster.log</tt>, placing it in a subdirectory to avoid intermixing such files with configuration data.
+- (7.0.1) The location of the PostgreSQL log file has been changed from <tt>/usr/local/groundwork/postgresql/data/postmaster.log</tt> to <tt>/usr/local/groundwork/postgresql/data/pg_log/postmaster.log</tt>, placing it in a subdirectory to avoid intermixing such files with configuration data.
 - (7.0.1) The PostgreSQL log file is now rotated on a weekly basis, to prevent it from growing forever. PostgreSQL may continue to log into the renamed file (<tt>postmaster.log.1</tt>) for up to an hour after the weekly file rotation, before it recognizes the situation and opens a new log file under the usual name (<tt>postmaster.log</tt>). There is no loss of information involved in this delayed transition.
 - (7.0.1) The <tt>/usr/local/groundwork/logs/postmaster.log</tt>symlink now points to the new location of the log fila, and a companion <tt>/usr/local/groundwork/logs/postmaster.log.1</tt>symlink is also provided to make it easy to access the renamed log file. This may be useful both during the period before PostgreSQL opens a new log file, and in general to look back in time to before the last file-rename action.
 
@@ -205,7 +170,7 @@ An Archive Server is intended to take over the duty of storing long-term perform
 
 Old data is not removed from the runtime database immediately upon being archived; some amount of overlap is allowed, and managed automatically. This provides for such things as ticketing-system references to event messages to remain valid for some time after those messages have been initially copied to the archive database.
 
-In the 7.0.1 release, by popular demand, when log archiving is enabled, the standard retention period for data in the runtime database has been extended to 3 months before deletion. The data should have long since been migrated to the archive database, but it is now kept around long enough for any practical medium-term operational usage instead of being deleted after a week. Sites can locally adjust this period, using the<tt>operationally_useful_days_for_messages</tt> and<tt>operationally_useful_days_for_performance_data</tt> parameters in the <tt>/usr/local/groundwork/config/log-archive-send.conf</tt>config file.
+In the 7.0.1 release, by popular demand, when log archiving is enabled, the standard retention period for data in the runtime database has been extended to 3 months before deletion. The data should have long since been migrated to the archive database, but it is now kept around long enough for any practical medium-term operational usage instead of being deleted after a week. Sites can locally adjust this period, using the <tt>operationally_useful_days_for_messages</tt> and <tt>operationally_useful_days_for_performance_data</tt> parameters in the <tt>/usr/local/groundwork/config/log-archive-send.conf</tt>config file.
 
 Standard reports which access the Archive Database for long-term reporting are not yet provided in the GWMEE 7.0.1 release. They will be provided at a later date, most likely as a Technical Bulletin patch.
 
@@ -228,7 +193,7 @@ The GDMA agent bundles included in GWMEE 7.0.0 and 7.0.1 have been upgraded to t
 
 The GDMA 2.3.1 release contained these improvements:
 
-- Forcibly setting <tt>Use_Long_Hostname</tt> by default in<tt>gdma_auto.conf</tt>, as we did in the GDMA 2.3.0 release, was a mistake, for most customers. It is now present (for clarity, so people know the option is available) but commented out, which reverts back to the old try-longname, then try-shortname fallback behavior.
+- Forcibly setting <tt>Use_Long_Hostname</tt> by default in <tt>gdma_auto.conf</tt>, as we did in the GDMA 2.3.0 release, was a mistake, for most customers. It is now present (for clarity, so people know the option is available) but commented out, which reverts back to the old try-longname, then try-shortname fallback behavior.
 - Auto-registration behavior is improved so it operates immediately on the first cycle, when the GDMA poller starts up. Also, if auto-registration is successful, the first fetch of the externals file also happens during that cycle, to shorten the time until monitoring begins.
 - Several different backoff algorithms are now available for use should auto-registration fails. GDMA clients are configured by default to use a reasonable backoff algorithm that will not continue to pester the server too often, if auto-registration continues to fail.
 - In the GDMA 2.3.0 release, a bug in how the GDMA client handled not finding its own hostname could cause the client poller to die during auto-registration; this is now fixed.
@@ -237,7 +202,7 @@ The GDMA 2.3.1 release contained these improvements:
 - Several other PowerShell plugins have had bugs fixed in their handling of warning and critical thresholds.
 - Problems in previous releases in how spaces are handled in the value of the <tt>$Plugin_Directory$</tt> macro have now been addressed.
 - The sample <tt>multihost_gdma_auto.conf</tt> file provided in the GDMA release now contains the various <tt>Auto_Register_*</tt>directives.
-- **NOTICE** : The AIX GDMA build for the GDMA 2.3.1 release contains bad paths in the standard config files. These must be changed from <tt>/opt/groundwork/...</tt> to<tt>/usr/local/groundwork/...</tt> on each AIX client, after installation.
+- **NOTICE** : The AIX GDMA build for the GDMA 2.3.1 release contains bad paths in the standard config files. These must be changed from <tt>/opt/groundwork/...</tt> to <tt>/usr/local/groundwork/...</tt> on each AIX client, after installation.
 
 The GDMA 2.3.2 release contains these further improvements:
 
@@ -258,15 +223,15 @@ The included version of the Java SDK has been upgraded to the latest version, wh
 
 ### Nagios
 
-- The default value of the <tt>startup_pause_timer</tt> option in the Bronx event broker (and in the<tt>/usr/local/groundwork/config/bronx.cfg</tt> configuration file) has been changed to 0, to avoid loss of data during Nagios startup (GWMON-10412).
+- The default value of the <tt>startup_pause_timer</tt> option in the Bronx event broker (and in the <tt>/usr/local/groundwork/config/bronx.cfg</tt> configuration file) has been changed to 0, to avoid loss of data during Nagios startup (GWMON-10412).
 - We have dramatically improved the Nagios restart time, down from around 30 seconds to typically 3 to 4 seconds, by recognizing and removing some delays in the way the Bronx event broker was operating (GWMON-10501). This will speed up Commit times considerably.
-- The default values, <tt>listener_max_packet_age</tt> and<tt>listener_max_packet_imminence</tt> are now set to <tt>900</tt>in the <tt>/usr/local/groundwork/config/bronx.cfg</tt>configuration file to accomodate the relaxed timing of some environments. This means that an upgrade will not be complete until you manually carry forward any local changes you made to configuration options in the release you are upgrading from.
+- The default values, <tt>listener_max_packet_age</tt> and <tt>listener_max_packet_imminence</tt> are now set to <tt>900</tt>in the <tt>/usr/local/groundwork/config/bronx.cfg</tt>configuration file to accomodate the relaxed timing of some environments. This means that an upgrade will not be complete until you manually carry forward any local changes you made to configuration options in the release you are upgrading from.
 
 ### Performance Data Handling
 
 - The processing of service performance data has been made more robust and reliable by support for a seek file which is periodically updated as performance data is processed (GWMON-10485). This should prevent the system getting stuck trying to re-read huge amounts of already-processed data under adverse circumstances.
-- The processing of service performance data now supports more than one input source (GWMON-10485). This is a complex change requiring separate explanation. See comments in the<tt>/usr/local/groundwork/config/perfdata.properties</tt>file.
-- The improvements to performance data handling just noted mean that the content of the<tt>/usr/local/groundwork/config/perfdata.properties</tt>configuration file has changed in this release. This means that an upgrade will not be complete until you manually carry forward any local changes you made to configuration options in the release you are upgrading from.
+- The processing of service performance data now supports more than one input source (GWMON-10485). This is a complex change requiring separate explanation. See comments in the <tt>/usr/local/groundwork/config/perfdata.properties</tt>file.
+- The improvements to performance data handling just noted mean that the content of the <tt>/usr/local/groundwork/config/perfdata.properties</tt>configuration file has changed in this release. This means that an upgrade will not be complete until you manually carry forward any local changes you made to configuration options in the release you are upgrading from.
 - Performance data configuration setup has been added to support the Cloud Hub feature, by providing RRD file and graph definitions for the new metrics sensed in that environment (GWMON-10659). In the 7.0.1 release, this setup has been simplified to depend only on a single "Collector Metric" perf-data entry, which matches any "<tt><b>.</b></tt>" type of service name.
 
 ### Insight Reports
@@ -288,9 +253,9 @@ Reports &gt; Notifications</tt>, and <tt>Reports &gt; Outages</tt>have been upda
 - We have standardized on using PowerShell v2 for calling Powershell scripts, because PowerShell v1 just turned out to be too clumsy to use. PowerShell v2 is available for download from Microsoft if it is not already loaded on your Windows machines.
 - Support for GDMA on AIX has been brought up to parity with all the other platforms (GDMA-282, GDMA-283, GDMA-284, GDMA-287).
 - Starting with the GDMA 2.3.0 release, plugin downloading now works on the AIX platform (GDMA-314).
-- The <tt>Use_Long_Hostname</tt> directive is now present in the<tt>gdma_auto.conf</tt> file and enabled there in the standard shipped GDMA configuration (GDMA-334), to highlight the fact that this option exists and to display its current setting. A site which wishes to use unqualified hostnames instead must turn this option off in the GDMA client configuration file.
+- The <tt>Use_Long_Hostname</tt> directive is now present in the <tt>gdma_auto.conf</tt> file and enabled there in the standard shipped GDMA configuration (GDMA-334), to highlight the fact that this option exists and to display its current setting. A site which wishes to use unqualified hostnames instead must turn this option off in the GDMA client configuration file.
 - A <tt>Forced_Hostname</tt> directive is now available to help in those irritating emergency situations where you just can't get DNS hostname resolution to work properly on a particular GDMA client machine (GDMA-316).
-- The <tt>PctTime</tt> metric in the performance data for the configured <tt>Poller_Service</tt> now properly refers to the configured <tt>Warning_Threshold</tt> and<tt>Critical_Threshold</tt> values, if present (defaulting to 60 and 80, respectively, as before) (GDMA-294).
+- The <tt>PctTime</tt> metric in the performance data for the configured <tt>Poller_Service</tt> now properly refers to the configured <tt>Warning_Threshold</tt> and <tt>Critical_Threshold</tt> values, if present (defaulting to 60 and 80, respectively, as before) (GDMA-294).
 - A major new capability has been added to GDMA in the combined GWMEE 6.7.0 / GDMA 2.3.0 release (GDMA-338). This is support for auto-registration by GDMA clients. A client can send in basic information about itself, and have itself registered on the server side with basic setup for monitoring according to pre-established host and service profiles. This should ease the administrative burden of adding new GDMA clients to the system. Full monitoring of such new machines will not commence until the administrator runs a Commit operation on the server, but the ordinary small tasks are handled automatically.
 
 ### Using PostgreSQL as the embedded database
@@ -312,24 +277,21 @@ Starting with release 6.6.1, GroundWork Monitor Enterprise is available for 64-b
 ## Limitations and Work-Arounds
 
 - SUSE 9 installations of GroundWork Monitor may exhibit an issue where certain services such as crond, postfix, ntp, and others will not start properly after GroundWork Monitor is installed. This is due to a dependency on the syslog service, which GroundWork replaces with syslog-ng at installation time. Later versions of SUSE Linux do not exhibit this issue. To work around this in SUSE 9, simply edit the init scripts for these services, removing the dependency on syslog. For example, in <tt>/etc/init.d/cron</tt>, change:
-    # Required-Start: $remote_fs $syslog $time
+```
+# Required-Start: $remote_fs $syslog $time
+```
 to:
-    # Required-Start: $remote_fs $time
+```
+# Required-Start: $remote_fs $time
+```
 - Running on Ubuntu releases before 12.04 is not recommended, because starting and stopping <tt>ntop</tt> on earlier releases is broken.
 - Safari and other webkit-based browsers such as Google Chrome may experience an issue whereby the URL will "cycle" in the address bar after login, and never display a portal page. This can sometimes be observed if the user logs in, then closes the browser window, and reconnects later. If this occurs, stop the browser, and retype the url in the form:
-    http(s)://servername/portal
+```
+http(s)://servername/portal
+```
 Usually it is only necessary to do this once per session.
-- The GroundWork backup utility,<tt>/usr/local/groundwork/gw-backup-br204-linux-32</tt> or<tt>/usr/local/groundwork/gw-backup-br204-linux-64</tt>, is included in the 6.6.1 release of GroundWork Monitor. It will be installed on the disk when you start the binary installer, and can be used to make a backup of an existing GroundWork 6.x installation. This utility does not support GroundWork Monitor 5.3, however, and the installer does not differentiate between versions when prompting you to make a backup. If you need to make a backup of your 5.3 installation, please refer to the backup section for older versions in this document. If you attempt to use the backup utility, the backup will hang, and must be killed. It will not harm the GroundWork installation, but neither will it back it up as intended.
-
+- The GroundWork backup utility, <tt>/usr/local/groundwork/gw-backup-br204-linux-32</tt> or <tt>/usr/local/groundwork/gw-backup-br204-linux-64</tt>, is included in the 6.6.1 release of GroundWork Monitor. It will be installed on the disk when you start the binary installer, and can be used to make a backup of an existing GroundWork 6.x installation. This utility does not support GroundWork Monitor 5.3, however, and the installer does not differentiate between versions when prompting you to make a backup. If you need to make a backup of your 5.3 installation, please refer to the backup section for older versions in this document. If you attempt to use the backup utility, the backup will hang, and must be killed. It will not harm the GroundWork installation, but neither will it back it up as intended.
 - In Auto-Discovery, the OS-match capability of NMAP scan methods is not consistent. It appears there is some significant variation in results based on network traffic conditions, and the OS used to perform the scan. This issue can be worked around by using the port-to-service or service profile matching capability of auto-discovery.
-
-## Compatibility Issues
-
-- An unfortunate regression in the performance data feeder found its way into the GWMEE 6.5 and 6.6 releases (GWMON-10272). In the course of extending the feeder to support more than 26 data sources for an RRD graph, to support a customer with an extreme configuration, we inadvertently broke backward compatibility with the way that the $CDEFLABEL#$ macro is substituted within $LISTSTART$ ... $LISTEND$ bracketing markers. (In the screen for Resources => USING APPLICATIONS > Configuration > Configuration Scenarios > Creating Performance Graphs, see the Custom RRDtool Graph Command section.) Instead of using simple letters for these labels, we used strings <tt>_v0_</tt>,<tt>_v1_</tt>, and so forth. This not only broke backward compatibility, it also created a rift between RRD graphing commands used in the Performance Viewer and those used in the Status Viewer. In the GWMEE 6.6.1 release, we are reverting back to the previous convention, to preserve backward compatibility for most customers upgrading to this release.
-
-Most customers will not see a difference with the old convention back in place. Previously generated RRD commands will be automatically replaced with updated commands when service-check performance data is processed under the new release. The only customers who will need to make manual adjustments are those who adapted to the new convention when creating complex manually-edited graphing commands.
-
-The old convention, of using single lowercase characters <tt>a</tt>through <tt>z</tt>, is now extended to support additional datasources in a different way. The sequence will now be<tt>a</tt>, <tt>b</tt>, ..., <tt>z</tt>, <tt>aa</tt>, <tt>ab</tt>, ..., <tt>az</tt>, <tt>ba</tt>, <tt>bb</tt>, and so forth. This will be formally documented in the 6.7 release.
 
 # ANNOUNCEMENTS AS OF VERSION 7.0.2
 
