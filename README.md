@@ -7,10 +7,9 @@ System Requirements:
 - 20GB of available disk space. Can be an NFS mount or local directory
 
 ## Install instructions
-- Get Dockerfile from https://github.com/gwos/groundwork-docker-container/Dockerfile and place it on the local system
-- Run command:
+- To build the image, simply invoke:
 ```
-sudo docker build -t groundwork_docker .
+sudo docker build -t groundwork_docker github.com/gwos/groundwork-docker-container
 ```
 - After the image was created run the container with the following command:
 ```
