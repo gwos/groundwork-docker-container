@@ -10,15 +10,15 @@ System Requirements:
 There are two ways to get the GroundWork Monitor docker image into your environment
 
 ### Build
-To build the image, simply invoke:
-
+- To build the image, simply invoke:
+```
 sudo docker build -t groundwork_docker github.com/gwos/groundwork-docker-container
-
+```
 ### Use pre-built docker image
-A prebuilt container is also available in the docker index:
-
+- A prebuilt container is also available in the docker index:
+```
 sudo docker pull gwos/groundwork-docker-container
-
+```
 ### Usage
 
 - After the image was created run the container with the following command:
