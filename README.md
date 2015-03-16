@@ -7,16 +7,26 @@ System Requirements:
 - 20GB of available disk space. Can be an NFS mount or local directory
 
 ## Install instructions
-- To build the image, simply invoke:
-```
+There are two ways to get the GroundWork Monitor docker image into your environment
+
+### Build
+To build the image, simply invoke:
+
 sudo docker build -t groundwork_docker github.com/gwos/groundwork-docker-container
-```
+
+### Use pre-built docker image
+A prebuilt container is also available in the docker index:
+
+sudo docker pull gwos/groundwork-docker-container
+
+### Usage
+
 - After the image was created run the container with the following command:
 ```
 docker run -it --name gwos-702 -h HOST-NAME -v LOCAL-STORAGE:/home/groundwork/data -v /etc/localtime:/etc/localtime:ro -p 80:80 groundwork_docker
 ```
 
-## Notes:
+#### Notes:
 - HOST-NAME needs to be resolvable because authentication uses intercept/redirect
 - LOCAL-STORAGE is the directory were the persistent data is stored between runs
 - The container runs on port 80. Make sure that you don't have another Apache on the same host
